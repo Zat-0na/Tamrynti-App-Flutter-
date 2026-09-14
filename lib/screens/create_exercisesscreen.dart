@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/exercise.dart';
 import 'package:flutter_application_1/models/exercise_set.dart';
 import 'package:flutter_application_1/widgets/bottom_sheet_option_ui.dart';
 import 'package:flutter_application_1/widgets/custom_dropdown.dart';
@@ -9,11 +10,22 @@ import 'package:image_picker/image_picker.dart';
 
 class CreateExercisesScreen extends StatefulWidget {
   const CreateExercisesScreen({super.key});
+
   @override
   State<CreateExercisesScreen> createState() => _CreateExercisesScreenState();
 }
 
 class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
+  String? selectedDifficulty;
+  String? selectedMuscleGroup;
+  List<String> muscleGroups = [
+    "Chest",
+    "Back",
+    "Legs",
+    "Shoulders",
+    "Biceps",
+    "Triceps",
+  ];
   TextEditingController nameController = TextEditingController();
 
   String exerciseName = "";
@@ -32,10 +44,8 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
       backgroundColor: const Color(0xFFE4D9D9),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 45),
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-
           children: [
             // EXERCISE NAME + EDIT
             Row(
@@ -52,7 +62,7 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
                 IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () {
-                    _showEditExerciseNameDialog(); // on tap edit icon, show the dialog to edit exercise name
+                    _showEditExerciseNameDialog();
                   },
                 ),
               ],
@@ -65,17 +75,14 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
               onTap: () {
                 _showImagePickerBottomSheet();
               },
-
               child: Container(
                 width: double.infinity,
                 height: 190,
-
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 241, 233, 233),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: Colors.black26, width: 2),
                 ),
-
                 child: Stack(
                   children: [
                     Center(
@@ -95,26 +102,21 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
                               ),
                             ),
                     ),
-
                     Positioned(
                       right: 8,
                       bottom: 8,
-
                       child: Row(
                         children: [
                           const Text(
                             "Add Image",
                             style: TextStyle(fontSize: 11),
                           ),
-
                           const SizedBox(width: 5),
-
                           Container(
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.white,
                             ),
-
                             child: const Icon(
                               Icons.add_circle_outline,
                               size: 28,
@@ -134,47 +136,45 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
             Row(
               children: [
                 Expanded(
-                  child: DropdownMenu<String>(
+                  child: CustomAddableDropdown(
                     width: double.infinity,
-
-                    label: const Text(
-                      "Difficulty",
-                      style: TextStyle(fontSize: 14),
-                    ),
-
-                    inputDecorationTheme: InputDecorationTheme(
-                      isDense: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide: const BorderSide(color: Colors.black),
-                      ),
-                    ),
-
-                    dropdownMenuEntries: <DropdownMenuEntry<String>>[
-                      DropdownMenuEntry(value: 'beginner', label: 'Beginner'),
-                      DropdownMenuEntry(
-                        value: 'intermediate',
-                        label: 'Intermediate',
-                      ),
-                      DropdownMenuEntry(value: 'expert', label: 'Expert'),
-                    ],
+                    label: "Difficulty",
+                    allowAddNew: false,
+                    items: const ["Beginner", "Intermediate", "Expert"],
+                    initialValue: selectedDifficulty,
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() => selectedDifficulty = value);
+                      }
+                    },
                   ),
                 ),
-
                 const SizedBox(width: 5),
-
-                const Expanded(
-                  child: CustomAddableDropdown(width: double.infinity),
+                Expanded(
+                  child: CustomAddableDropdown(
+                    width: double.infinity,
+                    label: "Muscle group",
+                    allowAddNew: true,
+                    items: muscleGroups,
+                    initialValue: selectedMuscleGroup,
+                    onItemAdded: (newItem) {
+                      setState(() => muscleGroups.add(newItem));
+                    },
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() => selectedMuscleGroup = value);
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
-
             const SizedBox(height: 10),
 
             // SETS TITLE
             Row(
-              children: [
-                const Text(
+              children: const [
+                Text(
                   "Sets",
                   style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),
                 ),
@@ -195,16 +195,13 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
             Expanded(
               child: ListView.builder(
                 itemCount: sets.length,
-
                 itemBuilder: (context, index) {
                   final ExerciseSet currentSet = sets[index];
 
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 10),
-
                     child: Row(
                       children: [
-                        // Set Number
                         SizedBox(
                           width: 50,
                           child: Text(
@@ -212,30 +209,21 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
                             style: const TextStyle(fontWeight: FontWeight.w500),
                           ),
                         ),
-
                         const SizedBox(width: 5),
-
-                        // Weight
                         Expanded(
                           child: NumberField(
                             controller: currentSet.weightController,
                             hintText: "Kg",
                           ),
                         ),
-
                         const SizedBox(width: 8),
-
-                        // Reps
                         Expanded(
                           child: NumberField(
                             controller: currentSet.repsController,
                             hintText: "Reps",
                           ),
                         ),
-
                         const SizedBox(width: 5),
-
-                        // Delete
                         IconButton(
                           onPressed: () {
                             removeSet(index);
@@ -249,7 +237,7 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
               ),
             ),
 
-            // ADD SET + BUTTON
+            // ADD SET BUTTON
             SizedBox(
               width: double.infinity,
               height: 55,
@@ -314,7 +302,16 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
                         ),
                         elevation: 0,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        final newExercise = Exercise(
+                          title: exerciseName,
+                          muscleGroup: selectedMuscleGroup,
+                          difficulty: selectedDifficulty,
+                          imageFile: selectedImage,
+                        );
+
+                        Navigator.pop(context, newExercise);
+                      },
                       child: const Text(
                         "Done",
                         style: TextStyle(
@@ -333,10 +330,6 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
     );
   }
 
-  // --------------------------------------------------
-  // FUNCTIONS (METHODS) MOVED TO THE BOTTOM
-
-  // Add Set
   void addSet() {
     setState(() {
       sets.add(
@@ -348,7 +341,6 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
     });
   }
 
-  // Delete Set
   void removeSet(int index) {
     setState(() {
       sets[index].dispose();
@@ -356,7 +348,6 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
     });
   }
 
-  // Image Picker Logic
   Future<void> _pickImage(ImageSource source) async {
     final XFile? pickedImage = await imagePicker.pickImage(source: source);
 
@@ -369,7 +360,6 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
     }
   }
 
-  // Bottom Sheet
   void _showImagePickerBottomSheet() {
     showModalBottomSheet(
       context: context,
@@ -380,7 +370,6 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // Gallery
                 ImagePickerOptionItem(
                   icon: Icons.photo_library_outlined,
                   label: "Gallery",
@@ -389,8 +378,6 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
                     _pickImage(ImageSource.gallery);
                   },
                 ),
-
-                // Camera
                 ImagePickerOptionItem(
                   icon: Icons.camera_alt_outlined,
                   label: "Camera",
@@ -399,8 +386,6 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
                     _pickImage(ImageSource.camera);
                   },
                 ),
-
-                // Delete
                 ImagePickerOptionItem(
                   icon: Icons.delete_outline,
                   label: "Delete",
@@ -420,7 +405,7 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
   }
 
   void _showEditExerciseNameDialog() {
-    nameController.text = exerciseName; // بيحط الاسم القديم جوه الـ TextField
+    nameController.text = exerciseName;
 
     showDialog(
       context: context,
@@ -429,21 +414,19 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
           title: const Text("Edit Exercise Name"),
           content: TextField(
             controller: nameController,
-            autofocus: true, // بيفتح الكيبورد ويقف عليها تلقائي
+            autofocus: true,
             decoration: const InputDecoration(
               hintText: "Type here your Exercise name",
               border: OutlineInputBorder(),
             ),
           ),
           actions: [
-            // زرار إلغاء
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
               child: const Text("Cancel"),
             ),
-            // زرار الـ Done جوا الـ Dialog
             ElevatedButton(
               onPressed: () {
                 setState(() {
@@ -462,7 +445,6 @@ class _CreateExercisesScreenState extends State<CreateExercisesScreen> {
   @override
   void dispose() {
     nameController.dispose();
-
     for (final set in sets) {
       set.dispose();
     }

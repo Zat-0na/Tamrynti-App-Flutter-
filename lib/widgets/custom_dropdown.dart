@@ -2,31 +2,44 @@ import 'package:flutter/material.dart';
 
 class CustomAddableDropdown extends StatefulWidget {
   final double? width;
+  final String label;
+  final List<String> items;
+  final String? initialValue;
+  final bool allowAddNew; 
+  final ValueChanged<String?>? onChanged;
+  final ValueChanged<String>? onItemAdded;
 
-  const CustomAddableDropdown({super.key, this.width});
+  const CustomAddableDropdown({
+    super.key,
+    required this.label,
+    required this.items,
+    this.initialValue,
+    this.width,
+    this.allowAddNew = true, 
+    this.onChanged,
+    this.onItemAdded,
+  });
 
   @override
   State<CustomAddableDropdown> createState() => _CustomAddableDropdownState();
 }
 
 class _CustomAddableDropdownState extends State<CustomAddableDropdown> {
-  List<String> items = [
-    'Chest',
-    'Back',
-    'Legs',
-    'Shoulders',
-    'Biceps',
-    'Triceps',
-  ];
   String? selectedItem;
   final TextEditingController textController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    selectedItem = widget.initialValue;
+  }
 
   void _showAddDialog() {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Add New Item"),
+          title: Text("Add New ${widget.label}"),
           content: TextField(
             controller: textController,
             decoration: const InputDecoration(hintText: "Enter name..."),
@@ -40,11 +53,13 @@ class _CustomAddableDropdownState extends State<CustomAddableDropdown> {
             ElevatedButton(
               onPressed: () {
                 if (textController.text.isNotEmpty) {
+                  final newItem = textController.text.trim();
+                  widget.onItemAdded?.call(newItem);
                   setState(() {
-                    items.add(textController.text);
-                    selectedItem = textController.text;
-                    textController.clear();
+                    selectedItem = newItem;
                   });
+                  widget.onChanged?.call(newItem);
+                  textController.clear();
                 }
                 Navigator.pop(context);
               },
@@ -61,18 +76,21 @@ class _CustomAddableDropdownState extends State<CustomAddableDropdown> {
     return DropdownMenu<String>(
       width: widget.width,
       menuHeight: 200,
-      label: Text("Muscle group"),
+      label: Text(widget.label),
+      initialSelection: selectedItem,
       inputDecorationTheme: InputDecorationTheme(
         isDense: true,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(50),
-          borderSide: BorderSide(color: Colors.black),
+          borderSide: const BorderSide(color: Colors.black),
         ),
       ),
-      initialSelection: selectedItem,
       dropdownMenuEntries: [
-        for (String item in items) DropdownMenuEntry(value: item, label: item),
-        const DropdownMenuEntry(value: 'add_new', label: '+ Add new'),
+        for (String item in widget.items)
+          DropdownMenuEntry(value: item, label: item),
+       
+        if (widget.allowAddNew)
+          const DropdownMenuEntry(value: 'add_new', label: '+ Add new'),
       ],
       onSelected: (String? value) {
         if (value == 'add_new') {
@@ -81,6 +99,7 @@ class _CustomAddableDropdownState extends State<CustomAddableDropdown> {
           setState(() {
             selectedItem = value;
           });
+          widget.onChanged?.call(value);
         }
       },
     );

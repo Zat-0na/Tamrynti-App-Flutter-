@@ -1,0 +1,508 @@
+[
+  {
+    "id": 1,
+    "name": "Push-ups",
+    "image": "Push-ups.png",
+    "targetMuscles": [
+      "Chest",
+      "Triceps",
+      "Shoulders"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 2,
+    "name": "Squats",
+    "image": "Squats.png",
+    "targetMuscles": [
+      "Quadriceps",
+      "Hamstrings",
+      "Glutes"
+    ],
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 3,
+    "name": "Lunges",
+    "image": "Lunges.png",
+    "targetMuscles": [
+      "Quadriceps",
+      "Hamstrings",
+      "Glutes"
+    ],
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 4,
+    "name": "Burpees",
+    "image": "Burpees.png",
+    "targetMuscles": [
+      "Full Body"
+    ],
+    "difficulty": "Expert"
+  },
+  {
+    "id": 5,
+    "name": "Mountain Climbers",
+    "image": "Mountain Climbers.png",
+    "targetMuscles": [
+      "Core",
+      "Shoulders",
+      "Legs"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 6,
+    "name": "Jumping Jacks",
+    "image": "Jumping Jacks.png",
+    "targetMuscles": [
+      "Full Body"
+    ],
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 7,
+    "name": "Bicycle Crunches",
+    "image": "Bicycle Crunches.png",
+    "targetMuscles": [
+      "Core"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 8,
+    "name": "Dips",
+    "image": "Dips.png",
+    "targetMuscles": [
+      "Triceps",
+      "Chest"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 9,
+    "name": "Pull-ups",
+    "image": "Pull-ups.png",
+    "targetMuscles": [
+      "Back",
+      "Biceps"
+    ],
+    "difficulty": "Expert"
+  },
+  {
+    "id": 10,
+    "name": "Russian Twists",
+    "image": "Russian Twists.png",
+    "targetMuscles": [
+      "Core",
+      "Obliques"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 11,
+    "name": "Leg Raises",
+    "image": "Leg Raises.png",
+    "targetMuscles": [
+      "Lower Abs"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 12,
+    "name": "Deadlifts",
+    "image": "Deadlifts.png",
+    "targetMuscles": [
+      "Back",
+      "Hamstrings",
+      "Glutes"
+    ],
+    "difficulty": "Expert"
+  },
+  {
+    "id": 13,
+    "name": "Bench Press",
+    "image": "Bench Press.png",
+    "targetMuscles": [
+      "Chest",
+      "Triceps"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 14,
+    "name": "Dumbbell Row",
+    "image": "Dumbbell Row.png",
+    "targetMuscles": [
+      "Back",
+      "Biceps"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 15,
+    "name": "Shoulder Press",
+    "image": "Shoulder Press.png",
+    "targetMuscles": [
+      "Shoulders",
+      "Triceps"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 16,
+    "name": "Calf Raises",
+    "image": "Calf Raises.png",
+    "targetMuscles": [
+      "Calves"
+    ],
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 17,
+    "name": "Tricep Extensions",
+    "image": "Tricep Extensions.png",
+    "targetMuscles": [
+      "Triceps"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 18,
+    "name": "Lateral Raises",
+    "image": "Lateral Raises.png",
+    "targetMuscles": [
+      "Shoulders"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 19,
+    "name": "Glute Bridges",
+    "image": "Glute Bridges.png",
+    "targetMuscles": [
+      "Glutes",
+      "Hamstrings"
+    ],
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 20,
+    "name": "Superman",
+    "image": "Superman.png",
+    "targetMuscles": [
+      "Lower Back",
+      "Glutes"
+    ],
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 21,
+    "name": "Box Jumps",
+    "image": "Box Jumps.png",
+    "targetMuscles": [
+      "Legs",
+      "Core"
+    ],
+    "difficulty": "Expert"
+  },
+  {
+    "id": 22,
+    "name": "Kettlebell Swings",
+    "image": "Kettlebell Swings.png",
+    "targetMuscles": [
+      "Glutes",
+      "Hamstrings",
+      "Core"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 23,
+    "name": "Step-ups",
+    "image": "Step-ups.png",
+    "targetMuscles": [
+      "Quadriceps",
+      "Hamstrings",
+      "Glutes"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 24,
+    "name": "Face Pulls",
+    "image": "Face Pulls.png",
+    "targetMuscles": [
+      "Rear Deltoids",
+      "Upper Back"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 25,
+    "name": "Lat Pulldowns",
+    "image": "Lat Pulldowns.png",
+    "targetMuscles": [
+      "Back",
+      "Biceps"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 26,
+    "name": "Reverse Lunges",
+    "image": "Reverse Lunges.png",
+    "targetMuscles": [
+      "Quadriceps",
+      "Hamstrings",
+      "Glutes"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 27,
+    "name": "Plyo Squats",
+    "image": "Plyo Squats.png",
+    "targetMuscles": [
+      "Quadriceps",
+      "Glutes"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 28,
+    "name": "Scissors Kicks",
+    "image": "Scissors Kicks.png",
+    "targetMuscles": [
+      "Lower Abs",
+      "Hip Flexors"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 29,
+    "name": "Tricep Dips",
+    "image": "Tricep Dips.png",
+    "targetMuscles": [
+      "Triceps"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 30,
+    "name": "Seated Rows",
+    "image": "Seated Rows.png",
+    "targetMuscles": [
+      "Back",
+      "Biceps"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 31,
+    "name": "Flutter Kicks",
+    "image": "flutter_kicks.png",
+    "targetMuscles": [
+      "Lower Abs"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 32,
+    "name": "Inverted Rows",
+    "image": "Inverted Rows.png",
+    "targetMuscles": [
+      "Back",
+      "Biceps"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 33,
+    "name": "Bulgarian Split Squats",
+    "image": "Bulgarian Split Squats.png",
+    "targetMuscles": [
+      "Quadriceps",
+      "Hamstrings",
+      "Glutes"
+    ],
+    "difficulty": "Expert"
+  },
+  {
+    "id": 34,
+    "name": "Prone Cobras",
+    "image": "Prone Cobras.png",
+    "targetMuscles": [
+      "Upper Back",
+      "Rear Deltoids"
+    ],
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 35,
+    "name": "Resistance Band Pull-Aparts",
+    "image": "Resistance Band Pull-Aparts.png",
+    "targetMuscles": [
+      "Upper Back",
+      "Rear Deltoids"
+    ],
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 36,
+    "name": "Wall Angels",
+    "image": "Wall Angels.png",
+    "targetMuscles": [
+      "Shoulders",
+      "Upper Back"
+    ],
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 37,
+    "name": "Bird Dogs",
+    "image": "Bird Dogs.png",
+    "targetMuscles": [
+      "Core",
+      "Lower Back"
+    ],
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 38,
+    "name": "Plyometric Push-ups",
+    "image": "Plyometric Push-ups.png",
+    "targetMuscles": [
+      "Chest",
+      "Triceps",
+      "Shoulders"
+    ],
+    "difficulty": "Expert"
+  },
+  {
+    "id": 39,
+    "name": "Decline Push-ups",
+    "image": "Decline Push-ups.png",
+    "targetMuscles": [
+      "Upper Chest",
+      "Triceps"
+    ],
+    "difficulty": "Expert"
+  },
+  {
+    "id": 40,
+    "name": "Incline Push-ups",
+    "image": "Incline Push-ups.png",
+    "targetMuscles": [
+      "Lower Chest",
+      "Triceps"
+    ],
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 41,
+    "name": "Dead Bugs",
+    "image": "Dead Bugs.png",
+    "targetMuscles": [
+      "Core",
+      "Lower Back"
+    ],
+    "difficulty": "Beginner"
+  },
+  {
+    "id": 42,
+    "name": "Pistol Squats",
+    "image": "Pistol Squats.png",
+    "targetMuscles": [
+      "Quadriceps",
+      "Hamstrings",
+      "Glutes"
+    ],
+    "difficulty": "Expert"
+  },
+  {
+    "id": 43,
+    "name": "Zottman Curls",
+    "image": "Zottman Curls.png",
+    "targetMuscles": [
+      "Biceps",
+      "Forearms"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 44,
+    "name": "Dragon Flags",
+    "image": "Dragon Flags.png",
+    "targetMuscles": [
+      "Full Core"
+    ],
+    "difficulty": "Expert"
+  },
+  {
+    "id": 45,
+    "name": "Renegade Rows",
+    "image": "Renegade Rows.png",
+    "targetMuscles": [
+      "Back",
+      "Core",
+      "Shoulders"
+    ],
+    "difficulty": "Expert"
+  },
+  {
+    "id": 46,
+    "name": "Frog Jumps",
+    "image": "Frog Jumps.png",
+    "targetMuscles": [
+      "Quadriceps",
+      "Calves",
+      "Glutes"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 47,
+    "name": "Turkish Get-ups",
+    "image": "Turkish Get-ups.png",
+    "targetMuscles": [
+      "Full Body",
+      "Core",
+      "Shoulders"
+    ],
+    "difficulty": "Expert"
+  },
+  {
+    "id": 48,
+    "name": "Bear Crawls",
+    "image": "Bear Crawls.png",
+    "targetMuscles": [
+      "Core",
+      "Shoulders",
+      "Hips"
+    ],
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": 49,
+    "name": "Windshield Wipers",
+    "image": "Windshield Wipers.png",
+    "targetMuscles": [
+      "Obliques",
+      "Core"
+    ],
+    "difficulty": "Expert"
+  },
+  {
+    "id": 50,
+    "name": "Thrusters",
+    "image": "Thrusters.png",
+    "targetMuscles": [
+      "Legs",
+      "Shoulders",
+      "Core"
+    ],
+    "difficulty": "Expert"
+  }
+]
