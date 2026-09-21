@@ -7,19 +7,28 @@
         {
             "name": "flutter_application_1",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+                "--android-skip-build-dependency-validation"
+            ]
         },
         {
             "name": "flutter_application_1 (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "args": [
+                "--android-skip-build-dependency-validation"
+            ]
         },
         {
             "name": "flutter_application_1 (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "args": [
+                "--android-skip-build-dependency-validation"
+            ]
         }
     ]
 }

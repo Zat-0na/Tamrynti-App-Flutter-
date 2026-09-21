@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/create_exercisesscreen.dart';
-import 'package:flutter_application_1/screens/my_plan_plan.dart';
-import 'package:flutter_application_1/widgets/custom_buttom_navbar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_application_1/models/exercise.dart';
-import 'package:flutter_application_1/widgets/exercise_card.dart';
+import 'package:flutter_application_1/screens/create_exercisesscreen.dart';
+import 'package:flutter_application_1/screens/my_fitness_plan.dart';
+import 'package:flutter_application_1/widgets/custom_buttom_navbar.dart';
+import 'package:flutter_application_1/widgets/grid_cards_widget.dart'; 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class MyFitnessPlan extends StatefulWidget {
-  final List<Exercise> userExercises;
-
-  const MyFitnessPlan({super.key, this.userExercises = const []});
+class MyPlanPlane extends StatefulWidget {
+  const MyPlanPlane({super.key});
 
   @override
-  State<MyFitnessPlan> createState() => _MyFitnessPlanState();
+  State<MyPlanPlane> createState() => _MyPlanPlaneState();
 }
 
-class _MyFitnessPlanState extends State<MyFitnessPlan> {
-  List<Exercise> _exercises = [];
+class _MyPlanPlaneState extends State<MyPlanPlane> {
   int _currentIndex = 2;
-  @override
-  void initState() {
-    super.initState();
-    _exercises = List.from(widget.userExercises);
-  }
 
   Widget _buildCurrentScreenContent() {
     switch (_currentIndex) {
@@ -31,11 +23,11 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
       case 1:
         return const Center(child: Text('Foods Screen'));
       case 2:
-        return _buildExercisesBody();
+        return _buildBodyContent();
       case 3:
         return const Center(child: Text('Statistics Screen'));
       default:
-        return _buildExercisesBody();
+        return _buildBodyContent();
     }
   }
 
@@ -63,6 +55,7 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
             ),
           ),
 
+          // زر My Plan
           Positioned(
             left: 90.w,
             top: 75.h,
@@ -72,14 +65,7 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
                 width: 78.w,
                 height: 26.h,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MyPlanPlane(),
-                      ),
-                    );
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFFF7F7),
                     elevation: 0,
@@ -104,6 +90,7 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
             ),
           ),
 
+          // زر Exercises (ينتقل إلى صفحة MyFitnessPlan)
           Positioned(
             left: 190.w,
             top: 75.h,
@@ -113,7 +100,9 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
                 width: 78.w,
                 height: 26.h,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFFF7F7),
                     elevation: 0,
@@ -173,18 +162,12 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(80.r),
                     onTap: () async {
-                      final newExercise = await Navigator.push<Exercise>(
+                      await Navigator.push<Exercise>(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const CreateExercisesScreen(),
                         ),
                       );
-
-                      if (newExercise != null) {
-                        setState(() {
-                          _exercises.add(newExercise);
-                        });
-                      }
                     },
                     child: Image.asset(
                       'assets/images/Icons/Custom Button.png',
@@ -215,42 +198,8 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
     );
   }
 
-  Widget _buildExercisesBody() {
-    return Padding(
-      padding: EdgeInsets.only(top: 150.h),
-      child: _exercises.isEmpty
-          ? Center(
-              child: Text(
-                'No exercises added yet',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontFamily: 'Rubik',
-                  color: const Color(0xFF445E75),
-                ),
-              ),
-            )
-          : ListView.builder(
-              padding: EdgeInsets.only(left: 37.w, right: 37.w, bottom: 110.h),
-              itemCount: _exercises.length,
-              itemBuilder: (context, index) {
-                final exercise = _exercises[index];
-
-                return Padding(
-                  padding: EdgeInsets.only(bottom: 12.h),
-                  child: ExerciseCard(
-                    title: exercise.title,
-                    muscleGroup: exercise.muscleGroup,
-                    difficulty: exercise.difficulty,
-                    imageFile: exercise.imageFile,
-                    onDelete: () {
-                      setState(() {
-                        _exercises.removeAt(index);
-                      });
-                    },
-                  ),
-                );
-              },
-            ),
-    );
+  // استخدام الـ Widget الجديدة هنا مباشرة
+  Widget _buildBodyContent() {
+    return const GridCardsWidget();
   }
 }

@@ -33,10 +33,7 @@ class _CustomscreenState extends State<Customscreen> {
                     child: Text(
                       "Fitness",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ),
 
@@ -75,9 +72,7 @@ class _CustomscreenState extends State<Customscreen> {
       style: TextButton.styleFrom(
         backgroundColor: isSelected ? Colors.white : Colors.transparent,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
       child: Text(
         text,
