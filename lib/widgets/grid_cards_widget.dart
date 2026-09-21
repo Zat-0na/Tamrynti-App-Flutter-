@@ -2,13 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/screens/lib_exercise_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// تم تعديل الاستيراد أو اسم الموديل هنا بناءً على اسم الملف عندك
-import '../models/grid_exercise.dart'; // تأكد إن اسم ملف الموديل كدة أو زي ما سميته
+import '../models/grid_exercise.dart';
 
 class GridCardsWidget extends StatefulWidget {
-  const GridCardsWidget({super.key});
+  final Function(List<GridExercise>) onExercisesSelected;
+
+  const GridCardsWidget({super.key, required this.onExercisesSelected});
 
   @override
   State<GridCardsWidget> createState() => _GridCardsWidgetState();
@@ -16,6 +18,9 @@ class GridCardsWidget extends StatefulWidget {
 
 class _GridCardsWidgetState extends State<GridCardsWidget> {
   List<GridExercise> exercises = [];
+
+  // Exercises selected by the user
+  List<GridExercise> selectedExercises = [];
 
   @override
   void initState() {
@@ -39,6 +44,22 @@ class _GridCardsWidgetState extends State<GridCardsWidget> {
     });
   }
 
+  void addExercise(GridExercise exercise) {
+    // Prevent duplicate exercises
+    final alreadyAdded = selectedExercises.any(
+      (selectedExercise) => selectedExercise.id == exercise.id,
+    );
+
+    if (!alreadyAdded) {
+      setState(() {
+        selectedExercises.add(exercise);
+      });
+
+      // Send the updated list to MyPlanPlane
+      widget.onExercisesSelected(List.from(selectedExercises));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -59,30 +80,45 @@ class _GridCardsWidgetState extends State<GridCardsWidget> {
         itemBuilder: (context, index) {
           final GridExercise exercise = exercises[index];
 
+          final bool isAdded = selectedExercises.any(
+            (selectedExercise) => selectedExercise.id == exercise.id,
+          );
+
           return ClipRRect(
             borderRadius: BorderRadius.circular(16.r),
             child: Stack(
               children: [
                 // Exercise Image
                 Positioned.fill(
-                  child: Image.asset(
-                    'assets/images/exercises/${exercise.image}',
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: const Color(0xFFD0C4C4),
-                        child: Center(
-                          child: Text(
-                            'No Image',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              LibExerciseScreen(exercise: exercise),
                         ),
                       );
                     },
+                    child: Image.asset(
+                      'assets/images/exercises/${exercise.image}',
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: const Color(0xFFD0C4C4),
+                          child: Center(
+                            child: Text(
+                              'No Image',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
 
@@ -133,18 +169,18 @@ class _GridCardsWidgetState extends State<GridCardsWidget> {
                     child: InkWell(
                       customBorder: const CircleBorder(),
                       onTap: () {
-                        // Add exercise to workout
+                        addExercise(exercise);
                       },
                       child: Container(
                         width: 32.w,
                         height: 32.h,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
+                        decoration: BoxDecoration(
+                          color: isAdded ? Colors.white : Colors.white,
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
-                          Icons.add,
-                          color: Colors.black,
+                        child: Icon(
+                          isAdded ? Icons.check : Icons.add,
+                          color: isAdded ? Colors.black : Colors.black,
                           size: 20,
                         ),
                       ),

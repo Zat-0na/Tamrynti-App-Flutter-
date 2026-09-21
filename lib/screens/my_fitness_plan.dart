@@ -3,13 +3,18 @@ import 'package:flutter_application_1/screens/create_exercisesscreen.dart';
 import 'package:flutter_application_1/screens/my_plan_plan.dart';
 import 'package:flutter_application_1/widgets/custom_buttom_navbar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:flutter_application_1/models/exercise.dart';
+import 'package:flutter_application_1/models/grid_exercise.dart';
 import 'package:flutter_application_1/widgets/exercise_card.dart';
 
 class MyFitnessPlan extends StatefulWidget {
   final List<Exercise> userExercises;
 
-  const MyFitnessPlan({super.key, this.userExercises = const []});
+  const MyFitnessPlan({
+    super.key,
+    this.userExercises = const [],
+  });
 
   @override
   State<MyFitnessPlan> createState() => _MyFitnessPlanState();
@@ -17,23 +22,66 @@ class MyFitnessPlan extends StatefulWidget {
 
 class _MyFitnessPlanState extends State<MyFitnessPlan> {
   List<Exercise> _exercises = [];
+
   int _currentIndex = 2;
+
   @override
   void initState() {
     super.initState();
-    _exercises = List.from(widget.userExercises);
+
+    _exercises = List.from(
+      widget.userExercises,
+    );
+  }
+
+  // Merge library exercises with existing exercises
+  void mergeLibraryExercises(
+    List<GridExercise> selectedExercises,
+  ) {
+    setState(() {
+      for (final gridExercise in selectedExercises) {
+        // Check if exercise already exists
+        final alreadyExists = _exercises.any(
+          (exercise) =>
+              exercise.title == gridExercise.name,
+        );
+
+        if (!alreadyExists) {
+          _exercises.add(
+            Exercise(
+              title: gridExercise.name,
+              muscleGroup:
+                  gridExercise.targetMuscles.join(', '),
+              difficulty: gridExercise.difficulty,
+              assetImage:
+                  'assets/images/exercises/${gridExercise.image}',
+            ),
+          );
+        }
+      }
+    });
   }
 
   Widget _buildCurrentScreenContent() {
     switch (_currentIndex) {
       case 0:
-        return const Center(child: Text('Daily Screen'));
+        return const Center(
+          child: Text('Daily Screen'),
+        );
+
       case 1:
-        return const Center(child: Text('Foods Screen'));
+        return const Center(
+          child: Text('Foods Screen'),
+        );
+
       case 2:
         return _buildExercisesBody();
+
       case 3:
-        return const Center(child: Text('Statistics Screen'));
+        return const Center(
+          child: Text('Statistics Screen'),
+        );
+
       default:
         return _buildExercisesBody();
     }
@@ -45,8 +93,11 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
       backgroundColor: const Color(0xFFE4D9D9),
       body: Stack(
         children: [
-          Positioned.fill(child: _buildCurrentScreenContent()),
+          Positioned.fill(
+            child: _buildCurrentScreenContent(),
+          ),
 
+          // Header
           Positioned(
             top: 22.h,
             left: 18.w,
@@ -63,6 +114,7 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
             ),
           ),
 
+          // My Plan Button
           Positioned(
             left: 90.w,
             top: 75.h,
@@ -72,19 +124,32 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
                 width: 78.w,
                 height: 26.h,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
+                  onPressed: () async {
+                    final List<GridExercise>?
+                        selectedExercises =
+                        await Navigator.push<
+                            List<GridExercise>>(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const MyPlanPlane(),
+                        builder: (context) =>
+                            const MyPlanPlane(),
                       ),
                     );
+
+                    if (selectedExercises != null) {
+                      mergeLibraryExercises(
+                        selectedExercises,
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFFF7F7),
                     elevation: 0,
                     padding: EdgeInsets.zero,
-                    side: const BorderSide(width: 2, color: Color(0xFF445E75)),
+                    side: const BorderSide(
+                      width: 2,
+                      color: Color(0xFF445E75),
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.r),
                     ),
@@ -104,6 +169,7 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
             ),
           ),
 
+          // Exercises Button
           Positioned(
             left: 190.w,
             top: 75.h,
@@ -118,7 +184,10 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
                     backgroundColor: const Color(0xFFFFF7F7),
                     elevation: 0,
                     padding: EdgeInsets.zero,
-                    side: const BorderSide(width: 2, color: Color(0xFF445E75)),
+                    side: const BorderSide(
+                      width: 2,
+                      color: Color(0xFF445E75),
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.r),
                     ),
@@ -138,6 +207,7 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
             ),
           ),
 
+          // Fitness Title
           Positioned(
             top: 42.h,
             left: 124.w,
@@ -154,6 +224,7 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
             ),
           ),
 
+          // Create Exercise Button
           if (_currentIndex == 2)
             Positioned(
               bottom: 85.h,
@@ -166,23 +237,32 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(9.r),
                     border: Border.all(
-                      color: const Color.fromARGB(255, 52, 72, 88),
+                      color: const Color.fromARGB(
+                        255,
+                        52,
+                        72,
+                        88,
+                      ),
                       width: 2.8,
                     ),
                   ),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(80.r),
                     onTap: () async {
-                      final newExercise = await Navigator.push<Exercise>(
+                      final newExercise =
+                          await Navigator.push<Exercise>(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CreateExercisesScreen(),
+                          builder: (context) =>
+                              const CreateExercisesScreen(),
                         ),
                       );
 
                       if (newExercise != null) {
                         setState(() {
-                          _exercises.add(newExercise);
+                          _exercises.add(
+                            newExercise,
+                          );
                         });
                       }
                     },
@@ -197,6 +277,7 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
               ),
             ),
 
+          // Bottom Navigation
           Positioned(
             left: 16.w,
             right: 16.w,
@@ -217,7 +298,9 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
 
   Widget _buildExercisesBody() {
     return Padding(
-      padding: EdgeInsets.only(top: 150.h),
+      padding: EdgeInsets.only(
+        top: 150.h,
+      ),
       child: _exercises.isEmpty
           ? Center(
               child: Text(
@@ -230,18 +313,25 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
               ),
             )
           : ListView.builder(
-              padding: EdgeInsets.only(left: 37.w, right: 37.w, bottom: 110.h),
+              padding: EdgeInsets.only(
+                left: 37.w,
+                right: 37.w,
+                bottom: 110.h,
+              ),
               itemCount: _exercises.length,
               itemBuilder: (context, index) {
                 final exercise = _exercises[index];
 
                 return Padding(
-                  padding: EdgeInsets.only(bottom: 12.h),
+                  padding: EdgeInsets.only(
+                    bottom: 12.h,
+                  ),
                   child: ExerciseCard(
                     title: exercise.title,
                     muscleGroup: exercise.muscleGroup,
                     difficulty: exercise.difficulty,
                     imageFile: exercise.imageFile,
+                    assetImage: exercise.assetImage,
                     onDelete: () {
                       setState(() {
                         _exercises.removeAt(index);
@@ -254,3 +344,4 @@ class _MyFitnessPlanState extends State<MyFitnessPlan> {
     );
   }
 }
+
