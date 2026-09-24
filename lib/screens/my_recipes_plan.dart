@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/create_exercisesscreen.dart';
-import 'package:flutter_application_1/screens/my_nutrition_plan.dart';
 import 'package:flutter_application_1/screens/my_plan_plan.dart';
 import 'package:flutter_application_1/widgets/custom_buttom_navbar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,21 +8,22 @@ import 'package:flutter_application_1/models/exercise.dart';
 import 'package:flutter_application_1/models/grid_exercise.dart';
 import 'package:flutter_application_1/widgets/exercise_card.dart';
 
-class MyFitnessPlan extends StatefulWidget {
+class MyRecipesPlan extends StatefulWidget {
   final List<Exercise> userExercises;
 
-  const MyFitnessPlan({
+  const MyRecipesPlan({
     super.key,
     this.userExercises = const [],
   });
 
   @override
-  State<MyFitnessPlan> createState() => _MyFitnessPlanState();
+  State<MyRecipesPlan> createState() => _MyRecipesPlanState();
 }
 
-class _MyFitnessPlanState extends State<MyFitnessPlan> {
+class _MyRecipesPlanState extends State<MyRecipesPlan> {
   List<Exercise> _exercises = [];
-final int _currentIndex = 2;
+
+  int _currentIndex = 2;
 
   @override
   void initState() {
@@ -62,30 +62,30 @@ final int _currentIndex = 2;
     });
   }
 
-  // Widget _buildCurrentScreenContent() {
-  //   switch (_currentIndex) {
-  //     case 0:
-  //       return const Center(
-  //         child: Text('Daily Screen'),
-  //       );
+  Widget _buildCurrentScreenContent() {
+    switch (_currentIndex) {
+      case 0:
+        return const Center(
+          child: Text('Daily Screen'),
+        );
 
-  //     case 1:
-  //       return const Center(
-  //         child: Text('Foods Screen'),
-  //       );
+      case 1:
+        return const Center(
+          child: Text('Foods Screen'),
+        );
 
-  //     case 2:
-  //       return _buildExercisesBody();
+      case 2:
+        return _buildExercisesBody();
 
-  //     case 3:
-  //       return const Center(
-  //         child: Text('Statistics Screen'),
-  //       );
+      case 3:
+        return const Center(
+          child: Text('Statistics Screen'),
+        );
 
-  //     default:
-  //       return _buildExercisesBody();
-  //   }
-  // }
+      default:
+        return _buildExercisesBody();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +93,9 @@ final int _currentIndex = 2;
       backgroundColor: const Color(0xFFE4D9D9),
       body: Stack(
         children: [
-          Positioned.fill(child: _buildExercisesBody()),
+          Positioned.fill(
+            child: _buildCurrentScreenContent(),
+          ),
 
           // Header
           Positioned(
@@ -191,7 +193,7 @@ final int _currentIndex = 2;
                     ),
                   ),
                   child: Text(
-                    'Exercises',
+                    'Recipes',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,
@@ -211,7 +213,7 @@ final int _currentIndex = 2;
             left: 124.w,
             right: 124.w,
             child: Text(
-              'Fitness',
+              'Nutrition',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
@@ -281,18 +283,11 @@ final int _currentIndex = 2;
             right: 16.w,
             bottom: 10.h,
             child: CustomBottomNavBar(
-              currentIndex: 2,
+              currentIndex: _currentIndex,
               onItemSelected: (index) {
-                if (index == 2) return;
-
-                if (index == 1) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MyNutritionPlan(),
-                    ),
-                  );
-                }
+                setState(() {
+                  _currentIndex = index;
+                });
               },
             ),
           ),
@@ -309,7 +304,7 @@ final int _currentIndex = 2;
       child: _exercises.isEmpty
           ? Center(
               child: Text(
-                'No exercises added yet',
+                'No recipes added yet',
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontFamily: 'Rubik',

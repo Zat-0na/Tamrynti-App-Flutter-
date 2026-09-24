@@ -1,89 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/create_exercisesscreen.dart';
-import 'package:flutter_application_1/screens/my_nutrition_plan.dart';
-import 'package:flutter_application_1/screens/my_plan_plan.dart';
+
+import 'package:flutter_application_1/models/recipe.dart';
+import 'package:flutter_application_1/screens/create_recipes_screen.dart';
+import 'package:flutter_application_1/screens/my_fitness_plan.dart';
 import 'package:flutter_application_1/widgets/custom_buttom_navbar.dart';
+import 'package:flutter_application_1/widgets/recipe_card.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:flutter_application_1/models/exercise.dart';
-import 'package:flutter_application_1/models/grid_exercise.dart';
-import 'package:flutter_application_1/widgets/exercise_card.dart';
+class MyNutritionPlan extends StatefulWidget {
+  final List<Recipe> userRecipes;
 
-class MyFitnessPlan extends StatefulWidget {
-  final List<Exercise> userExercises;
-
-  const MyFitnessPlan({
-    super.key,
-    this.userExercises = const [],
-  });
+  const MyNutritionPlan({super.key, this.userRecipes = const []});
 
   @override
-  State<MyFitnessPlan> createState() => _MyFitnessPlanState();
+  State<MyNutritionPlan> createState() => _MyNutritionPlanState();
 }
 
-class _MyFitnessPlanState extends State<MyFitnessPlan> {
-  List<Exercise> _exercises = [];
-final int _currentIndex = 2;
+class _MyNutritionPlanState extends State<MyNutritionPlan> {
+  List<Recipe> _recipes = [];
+
+  final int _currentIndex = 1;
 
   @override
   void initState() {
     super.initState();
 
-    _exercises = List.from(
-      widget.userExercises,
-    );
-  }
-
-  // Merge library exercises with existing exercises
-  void mergeLibraryExercises(
-    List<GridExercise> selectedExercises,
-  ) {
-    setState(() {
-      for (final gridExercise in selectedExercises) {
-        // Check if exercise already exists
-        final alreadyExists = _exercises.any(
-          (exercise) =>
-              exercise.title == gridExercise.name,
-        );
-
-        if (!alreadyExists) {
-          _exercises.add(
-            Exercise(
-              title: gridExercise.name,
-              muscleGroup:
-                  gridExercise.targetMuscles.join(', '),
-              difficulty: gridExercise.difficulty,
-              assetImage:
-                  'assets/images/exercises/${gridExercise.image}',
-            ),
-          );
-        }
-      }
-    });
+    _recipes = List.from(widget.userRecipes);
   }
 
   // Widget _buildCurrentScreenContent() {
   //   switch (_currentIndex) {
   //     case 0:
-  //       return const Center(
-  //         child: Text('Daily Screen'),
-  //       );
+  //       return const Center(child: Text('Daily Screen'));
 
   //     case 1:
-  //       return const Center(
-  //         child: Text('Foods Screen'),
-  //       );
+  //       return _buildRecipesBody();
 
   //     case 2:
-  //       return _buildExercisesBody();
+  //       return const Center(child: Text('Exercises Screen'));
 
   //     case 3:
-  //       return const Center(
-  //         child: Text('Statistics Screen'),
-  //       );
+  //       return const Center(child: Text('Statistics Screen'));
 
   //     default:
-  //       return _buildExercisesBody();
+  //       return _buildRecipesBody();
   //   }
   // }
 
@@ -91,11 +52,12 @@ final int _currentIndex = 2;
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFE4D9D9),
+
       body: Stack(
         children: [
-          Positioned.fill(child: _buildExercisesBody()),
+          Positioned.fill(child:  _buildRecipesBody()),
 
-          // Header
+          // HEADER
           Positioned(
             top: 22.h,
             left: 18.w,
@@ -112,7 +74,7 @@ final int _currentIndex = 2;
             ),
           ),
 
-          // My Plan Button
+          // MY PLAN BUTTON
           Positioned(
             left: 90.w,
             top: 75.h,
@@ -122,32 +84,12 @@ final int _currentIndex = 2;
                 width: 78.w,
                 height: 26.h,
                 child: ElevatedButton(
-                  onPressed: () async {
-                    final List<GridExercise>?
-                        selectedExercises =
-                        await Navigator.push<
-                            List<GridExercise>>(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const MyPlanPlane(),
-                      ),
-                    );
-
-                    if (selectedExercises != null) {
-                      mergeLibraryExercises(
-                        selectedExercises,
-                      );
-                    }
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFFF7F7),
                     elevation: 0,
                     padding: EdgeInsets.zero,
-                    side: const BorderSide(
-                      width: 2,
-                      color: Color(0xFF445E75),
-                    ),
+                    side: const BorderSide(width: 2, color: Color(0xFF445E75)),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.r),
                     ),
@@ -167,7 +109,7 @@ final int _currentIndex = 2;
             ),
           ),
 
-          // Exercises Button
+          // RECIPES BUTTON
           Positioned(
             left: 190.w,
             top: 75.h,
@@ -182,16 +124,13 @@ final int _currentIndex = 2;
                     backgroundColor: const Color(0xFFFFF7F7),
                     elevation: 0,
                     padding: EdgeInsets.zero,
-                    side: const BorderSide(
-                      width: 2,
-                      color: Color(0xFF445E75),
-                    ),
+                    side: const BorderSide(width: 2, color: Color(0xFF445E75)),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.r),
                     ),
                   ),
                   child: Text(
-                    'Exercises',
+                    'Recipes',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,
@@ -205,13 +144,13 @@ final int _currentIndex = 2;
             ),
           ),
 
-          // Fitness Title
+          // NUTRITION TITLE
           Positioned(
             top: 42.h,
             left: 124.w,
             right: 124.w,
             child: Text(
-              'Fitness',
+              'Nutrition',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
@@ -222,8 +161,8 @@ final int _currentIndex = 2;
             ),
           ),
 
-          // Create Exercise Button
-          if (_currentIndex == 2)
+          // ADD CUSTOM RECIPE BUTTON
+          if (_currentIndex == 1)
             Positioned(
               bottom: 85.h,
               right: 15.w,
@@ -235,32 +174,23 @@ final int _currentIndex = 2;
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(9.r),
                     border: Border.all(
-                      color: const Color.fromARGB(
-                        255,
-                        52,
-                        72,
-                        88,
-                      ),
+                      color: const Color.fromARGB(255, 52, 72, 88),
                       width: 2.8,
                     ),
                   ),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(80.r),
                     onTap: () async {
-                      final newExercise =
-                          await Navigator.push<Exercise>(
+                      final newRecipe = await Navigator.push<Recipe>(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              const CreateExercisesScreen(),
+                          builder: (context) => const CreateRecipesScreen(),
                         ),
                       );
 
-                      if (newExercise != null) {
+                      if (newRecipe != null) {
                         setState(() {
-                          _exercises.add(
-                            newExercise,
-                          );
+                          _recipes.add(newRecipe);
                         });
                       }
                     },
@@ -275,21 +205,21 @@ final int _currentIndex = 2;
               ),
             ),
 
-          // Bottom Navigation
+          // BOTTOM NAVIGATION
           Positioned(
             left: 16.w,
             right: 16.w,
             bottom: 10.h,
             child: CustomBottomNavBar(
-              currentIndex: 2,
+              currentIndex: 1,
               onItemSelected: (index) {
-                if (index == 2) return;
+                if (index == 1) return;
 
-                if (index == 1) {
+                if (index == 2) {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MyNutritionPlan(),
+                      builder: (context) => const MyFitnessPlan(),
                     ),
                   );
                 }
@@ -301,15 +231,13 @@ final int _currentIndex = 2;
     );
   }
 
-  Widget _buildExercisesBody() {
+  Widget _buildRecipesBody() {
     return Padding(
-      padding: EdgeInsets.only(
-        top: 150.h,
-      ),
-      child: _exercises.isEmpty
+      padding: EdgeInsets.only(top: 150.h),
+      child: _recipes.isEmpty
           ? Center(
               child: Text(
-                'No exercises added yet',
+                'No recipes added yet',
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontFamily: 'Rubik',
@@ -318,28 +246,22 @@ final int _currentIndex = 2;
               ),
             )
           : ListView.builder(
-              padding: EdgeInsets.only(
-                left: 37.w,
-                right: 37.w,
-                bottom: 110.h,
-              ),
-              itemCount: _exercises.length,
+              padding: EdgeInsets.only(left: 37.w, right: 37.w, bottom: 110.h),
+              itemCount: _recipes.length,
               itemBuilder: (context, index) {
-                final exercise = _exercises[index];
+                final recipe = _recipes[index];
 
                 return Padding(
-                  padding: EdgeInsets.only(
-                    bottom: 12.h,
-                  ),
-                  child: ExerciseCard(
-                    title: exercise.title,
-                    muscleGroup: exercise.muscleGroup,
-                    difficulty: exercise.difficulty,
-                    imageFile: exercise.imageFile,
-                    assetImage: exercise.assetImage,
+                  padding: EdgeInsets.only(bottom: 12.h),
+                  child: RecipeCard(
+                    title: recipe.title,
+                    mealType: recipe.mealType,
+                    imageFile: recipe.imageFile,
+                    assetImage: recipe.assetImage,
+                    totalCalories: recipe.totalCalories,
                     onDelete: () {
                       setState(() {
-                        _exercises.removeAt(index);
+                        _recipes.removeAt(index);
                       });
                     },
                   ),
@@ -349,4 +271,3 @@ final int _currentIndex = 2;
     );
   }
 }
-

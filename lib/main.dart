@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/my_fitness_plan.dart';
+import 'package:flutter_application_1/screens/my_nutrition_plan.dart';
 import 'package:flutter_application_1/screens/my_plan_plan.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
-        home: const MyFitnessPlan(),
+        home: const MyNutritionPlan(),
       ),
     );
   }

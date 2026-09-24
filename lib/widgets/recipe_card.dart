@@ -1,20 +1,21 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ExerciseCard extends StatelessWidget {
+class RecipeCard extends StatelessWidget {
   final String title;
-  final String? muscleGroup;
-  final String? difficulty;
+  final String? mealType;
+  final double? totalCalories;
   final File? imageFile;
   final String? assetImage;
   final VoidCallback? onDelete;
 
-  const ExerciseCard({
+  const RecipeCard({
     super.key,
     required this.title,
-    this.muscleGroup,
-    this.difficulty,
+    this.mealType,
+    this.totalCalories,
     this.imageFile,
     this.assetImage,
     this.onDelete,
@@ -34,7 +35,7 @@ class ExerciseCard extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          // Exercise Image
+          // Recipe Image
           Positioned(
             left: 1.w,
             top: 1.h,
@@ -54,7 +55,7 @@ class ExerciseCard extends StatelessWidget {
                     : Container(
                         color: Colors.grey[300],
                         child: const Icon(
-                          Icons.fitness_center,
+                          Icons.restaurant,
                           color: Colors.grey,
                           size: 30,
                         ),
@@ -63,13 +64,13 @@ class ExerciseCard extends StatelessWidget {
             ),
           ),
 
-          // Exercise Title
+          // Recipe Title
           Positioned(
             left: 108.w,
             top: 10.h,
             right: 35.w,
             child: Text(
-              title.isEmpty ? 'Exercise Name' : title,
+              title.isEmpty ? 'Recipe Name' : title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
@@ -81,7 +82,7 @@ class ExerciseCard extends StatelessWidget {
             ),
           ),
 
-          // Muscle Group & Difficulty
+          // Meal Type + Total Calories
           Positioned(
             left: 108.w,
             top: 38.h,
@@ -90,7 +91,7 @@ class ExerciseCard extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    'Muscle group : ${muscleGroup ?? "Not set"}',
+                    'Meal type : ${mealType ?? "Not set"}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -101,10 +102,12 @@ class ExerciseCard extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 const SizedBox(width: 12),
+
                 Flexible(
                   child: Text(
-                    'Difficulty : ${difficulty ?? "Not set"}',
+                    'Calories : ${_formatCalories(totalCalories)} kcal',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -140,5 +143,17 @@ class ExerciseCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _formatCalories(double? calories) {
+    if (calories == null) {
+      return "0";
+    }
+
+    if (calories == calories.roundToDouble()) {
+      return calories.toInt().toString();
+    }
+
+    return calories.toStringAsFixed(1);
   }
 }
