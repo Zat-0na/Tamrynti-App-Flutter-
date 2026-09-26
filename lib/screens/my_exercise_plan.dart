@@ -1,20 +1,20 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/exercise.dart';
 import 'package:flutter_application_1/models/grid_exercise.dart';
 import 'package:flutter_application_1/screens/create_exercisesscreen.dart';
+import 'package:flutter_application_1/screens/lib_exercise_screen.dart';
 import 'package:flutter_application_1/widgets/custom_buttom_navbar.dart';
 import 'package:flutter_application_1/widgets/grid_cards_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class MyPlanPlane extends StatefulWidget {
-  const MyPlanPlane({super.key});
+class MyExcersisePlan extends StatefulWidget {
+  const MyExcersisePlan({super.key});
 
   @override
-  State<MyPlanPlane> createState() => _MyPlanPlaneState();
+  State<MyExcersisePlan> createState() => _MyExcersisePlanState();
 }
 
-class _MyPlanPlaneState extends State<MyPlanPlane> {
+class _MyExcersisePlanState extends State<MyExcersisePlan> {
   int _currentIndex = 2;
 
   // Exercises selected from the library
@@ -26,9 +26,8 @@ class _MyPlanPlaneState extends State<MyPlanPlane> {
       backgroundColor: const Color(0xFFE4D9D9),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: _buildCurrentScreenContent(),
-          ),
+          // Main Content
+          Positioned.fill(child: _buildCurrentScreenContent()),
 
           // Header
           Positioned(
@@ -62,10 +61,7 @@ class _MyPlanPlaneState extends State<MyPlanPlane> {
                     backgroundColor: const Color(0xFFFFF7F7),
                     elevation: 0,
                     padding: EdgeInsets.zero,
-                    side: const BorderSide(
-                      width: 2,
-                      color: Color(0xFF445E75),
-                    ),
+                    side: const BorderSide(width: 2, color: Color(0xFF445E75)),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.r),
                     ),
@@ -96,20 +92,13 @@ class _MyPlanPlaneState extends State<MyPlanPlane> {
                 height: 26.h,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Return selected exercises to MyFitnessPlan
-                    Navigator.pop(
-                      context,
-                      selectedExercises,
-                    );
+                    Navigator.pop(context, selectedExercises);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFFF7F7),
                     elevation: 0,
                     padding: EdgeInsets.zero,
-                    side: const BorderSide(
-                      width: 2,
-                      color: Color(0xFF445E75),
-                    ),
+                    side: const BorderSide(width: 2, color: Color(0xFF445E75)),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.r),
                     ),
@@ -159,12 +148,7 @@ class _MyPlanPlaneState extends State<MyPlanPlane> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(9.r),
                     border: Border.all(
-                      color: const Color.fromARGB(
-                        255,
-                        52,
-                        72,
-                        88,
-                      ),
+                      color: const Color.fromARGB(255, 52, 72, 88),
                       width: 2.8,
                     ),
                   ),
@@ -174,8 +158,7 @@ class _MyPlanPlaneState extends State<MyPlanPlane> {
                       await Navigator.push<Exercise>(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              const CreateExercisesScreen(),
+                          builder: (context) => const CreateExercisesScreen(),
                         ),
                       );
                     },
@@ -212,22 +195,16 @@ class _MyPlanPlaneState extends State<MyPlanPlane> {
   Widget _buildCurrentScreenContent() {
     switch (_currentIndex) {
       case 0:
-        return const Center(
-          child: Text('Daily Screen'),
-        );
+        return const Center(child: Text('Daily Screen'));
 
       case 1:
-        return const Center(
-          child: Text('Foods Screen'),
-        );
+        return const Center(child: Text('Foods Screen'));
 
       case 2:
         return _buildBodyContent();
 
       case 3:
-        return const Center(
-          child: Text('Statistics Screen'),
-        );
+        return const Center(child: Text('Statistics Screen'));
 
       default:
         return _buildBodyContent();
@@ -235,8 +212,37 @@ class _MyPlanPlaneState extends State<MyPlanPlane> {
   }
 
   Widget _buildBodyContent() {
-    return GridCardsWidget(
-      onExercisesSelected: (exercises) {
+    return GridCardsWidget<GridExercise>(
+      jsonPath: 'assets/data/exercises.json',
+
+      imagePath: 'assets/images/exercises',
+
+      fromJson: (json) {
+        return GridExercise.fromJson(json);
+      },
+
+      getId: (exercise) {
+        return exercise.id;
+      },
+
+      getTitle: (exercise) {
+        return exercise.name;
+      },
+
+      getImage: (exercise) {
+        return exercise.image;
+      },
+
+      onItemTap: (exercise) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LibExerciseScreen(exercise: exercise),
+          ),
+        );
+      },
+
+      onItemsSelected: (exercises) {
         setState(() {
           selectedExercises = exercises;
         });
@@ -244,4 +250,3 @@ class _MyPlanPlaneState extends State<MyPlanPlane> {
     );
   }
 }
-

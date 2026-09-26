@@ -1,91 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/create_exercisesscreen.dart';
-import 'package:flutter_application_1/screens/my_plan_plan.dart';
+import 'package:flutter_application_1/models/grid_recipe.dart';
+import 'package:flutter_application_1/models/recipe.dart';
+import 'package:flutter_application_1/screens/create_recipes_screen.dart';
+import 'package:flutter_application_1/screens/lib_recipe_screen.dart';
 import 'package:flutter_application_1/widgets/custom_buttom_navbar.dart';
+import 'package:flutter_application_1/widgets/grid_cards_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:flutter_application_1/models/exercise.dart';
-import 'package:flutter_application_1/models/grid_exercise.dart';
-import 'package:flutter_application_1/widgets/exercise_card.dart';
-
-class MyRecipesPlan extends StatefulWidget {
-  final List<Exercise> userExercises;
-
-  const MyRecipesPlan({
-    super.key,
-    this.userExercises = const [],
-  });
+class MyRecipePlan extends StatefulWidget {
+  const MyRecipePlan({super.key});
 
   @override
-  State<MyRecipesPlan> createState() => _MyRecipesPlanState();
+  State<MyRecipePlan> createState() => _MyRecipePlanState();
 }
 
-class _MyRecipesPlanState extends State<MyRecipesPlan> {
-  List<Exercise> _exercises = [];
+class _MyRecipePlanState extends State<MyRecipePlan> {
+  int _currentIndex = 1;
 
-  int _currentIndex = 2;
+  // Recipes selected from the library
+  List<GridRecipe> selectedRecipes = [];
 
-  @override
-  void initState() {
-    super.initState();
-
-    _exercises = List.from(
-      widget.userExercises,
-    );
-  }
-
-  // Merge library exercises with existing exercises
-  void mergeLibraryExercises(
-    List<GridExercise> selectedExercises,
-  ) {
-    setState(() {
-      for (final gridExercise in selectedExercises) {
-        // Check if exercise already exists
-        final alreadyExists = _exercises.any(
-          (exercise) =>
-              exercise.title == gridExercise.name,
-        );
-
-        if (!alreadyExists) {
-          _exercises.add(
-            Exercise(
-              title: gridExercise.name,
-              muscleGroup:
-                  gridExercise.targetMuscles.join(', '),
-              difficulty: gridExercise.difficulty,
-              assetImage:
-                  'assets/images/exercises/${gridExercise.image}',
-            ),
-          );
-        }
-      }
-    });
-  }
-
-  Widget _buildCurrentScreenContent() {
-    switch (_currentIndex) {
-      case 0:
-        return const Center(
-          child: Text('Daily Screen'),
-        );
-
-      case 1:
-        return const Center(
-          child: Text('Foods Screen'),
-        );
-
-      case 2:
-        return _buildExercisesBody();
-
-      case 3:
-        return const Center(
-          child: Text('Statistics Screen'),
-        );
-
-      default:
-        return _buildExercisesBody();
-    }
-  }
+  // Recipes created by the user
+  List<Recipe> customRecipes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -93,9 +29,8 @@ class _MyRecipesPlanState extends State<MyRecipesPlan> {
       backgroundColor: const Color(0xFFE4D9D9),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: _buildCurrentScreenContent(),
-          ),
+          // Main Content
+          Positioned.fill(child: _buildCurrentScreenContent()),
 
           // Header
           Positioned(
@@ -114,7 +49,7 @@ class _MyRecipesPlanState extends State<MyRecipesPlan> {
             ),
           ),
 
-          // My Plan Button
+          // MY PLAN BUTTON
           Positioned(
             left: 90.w,
             top: 75.h,
@@ -124,32 +59,12 @@ class _MyRecipesPlanState extends State<MyRecipesPlan> {
                 width: 78.w,
                 height: 26.h,
                 child: ElevatedButton(
-                  onPressed: () async {
-                    final List<GridExercise>?
-                        selectedExercises =
-                        await Navigator.push<
-                            List<GridExercise>>(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const MyPlanPlane(),
-                      ),
-                    );
-
-                    if (selectedExercises != null) {
-                      mergeLibraryExercises(
-                        selectedExercises,
-                      );
-                    }
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFFF7F7),
                     elevation: 0,
                     padding: EdgeInsets.zero,
-                    side: const BorderSide(
-                      width: 2,
-                      color: Color(0xFF445E75),
-                    ),
+                    side: const BorderSide(width: 2, color: Color(0xFF445E75)),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.r),
                     ),
@@ -168,8 +83,7 @@ class _MyRecipesPlanState extends State<MyRecipesPlan> {
               ),
             ),
           ),
-
-          // Exercises Button
+          // Recipes Button
           Positioned(
             left: 190.w,
             top: 75.h,
@@ -179,15 +93,14 @@ class _MyRecipesPlanState extends State<MyRecipesPlan> {
                 width: 78.w,
                 height: 26.h,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context, selectedRecipes);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFFF7F7),
                     elevation: 0,
                     padding: EdgeInsets.zero,
-                    side: const BorderSide(
-                      width: 2,
-                      color: Color(0xFF445E75),
-                    ),
+                    side: const BorderSide(width: 2, color: Color(0xFF445E75)),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.r),
                     ),
@@ -206,12 +119,11 @@ class _MyRecipesPlanState extends State<MyRecipesPlan> {
               ),
             ),
           ),
-
-          // Fitness Title
+          // Nutrition Title
           Positioned(
             top: 42.h,
-            left: 124.w,
-            right: 124.w,
+            left: 110.w,
+            right: 110.w,
             child: Text(
               'Nutrition',
               textAlign: TextAlign.center,
@@ -224,8 +136,8 @@ class _MyRecipesPlanState extends State<MyRecipesPlan> {
             ),
           ),
 
-          // Create Exercise Button
-          if (_currentIndex == 2)
+          // Create Recipe Button
+          if (_currentIndex == 1)
             Positioned(
               bottom: 85.h,
               right: 15.w,
@@ -237,32 +149,23 @@ class _MyRecipesPlanState extends State<MyRecipesPlan> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(9.r),
                     border: Border.all(
-                      color: const Color.fromARGB(
-                        255,
-                        52,
-                        72,
-                        88,
-                      ),
+                      color: const Color.fromARGB(255, 52, 72, 88),
                       width: 2.8,
                     ),
                   ),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(80.r),
                     onTap: () async {
-                      final newExercise =
-                          await Navigator.push<Exercise>(
+                      final Recipe? newRecipe = await Navigator.push<Recipe>(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              const CreateExercisesScreen(),
+                          builder: (context) => const CreateRecipesScreen(),
                         ),
                       );
 
-                      if (newExercise != null) {
+                      if (newRecipe != null) {
                         setState(() {
-                          _exercises.add(
-                            newExercise,
-                          );
+                          customRecipes.add(newRecipe);
                         });
                       }
                     },
@@ -296,52 +199,61 @@ class _MyRecipesPlanState extends State<MyRecipesPlan> {
     );
   }
 
-  Widget _buildExercisesBody() {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: 150.h,
-      ),
-      child: _exercises.isEmpty
-          ? Center(
-              child: Text(
-                'No recipes added yet',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontFamily: 'Rubik',
-                  color: const Color(0xFF445E75),
-                ),
-              ),
-            )
-          : ListView.builder(
-              padding: EdgeInsets.only(
-                left: 37.w,
-                right: 37.w,
-                bottom: 110.h,
-              ),
-              itemCount: _exercises.length,
-              itemBuilder: (context, index) {
-                final exercise = _exercises[index];
+  Widget _buildCurrentScreenContent() {
+    switch (_currentIndex) {
+      case 0:
+        return const Center(child: Text('Daily Screen'));
 
-                return Padding(
-                  padding: EdgeInsets.only(
-                    bottom: 12.h,
-                  ),
-                  child: ExerciseCard(
-                    title: exercise.title,
-                    muscleGroup: exercise.muscleGroup,
-                    difficulty: exercise.difficulty,
-                    imageFile: exercise.imageFile,
-                    assetImage: exercise.assetImage,
-                    onDelete: () {
-                      setState(() {
-                        _exercises.removeAt(index);
-                      });
-                    },
-                  ),
-                );
-              },
-            ),
+      case 1:
+        return _buildBodyContent();
+
+      case 2:
+        return const Center(child: Text('Fitness Screen'));
+
+      case 3:
+        return const Center(child: Text('Statistics Screen'));
+
+      default:
+        return _buildBodyContent();
+    }
+  }
+
+  Widget _buildBodyContent() {
+    return GridCardsWidget<GridRecipe>(
+      jsonPath: 'assets/data/recipes.json',
+
+      imagePath: 'assets/images/recipes',
+
+      fromJson: (json) {
+        return GridRecipe.fromJson(json);
+      },
+
+      getId: (recipe) {
+        return recipe.id;
+      },
+
+      getTitle: (recipe) {
+        return recipe.title;
+      },
+
+      getImage: (recipe) {
+        return recipe.image;
+      },
+
+      onItemTap: (recipe) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LibRecipeScreen(recipe: recipe),
+          ),
+        );
+      },
+
+      onItemsSelected: (recipes) {
+        setState(() {
+          selectedRecipes = recipes;
+        });
+      },
     );
   }
 }
-

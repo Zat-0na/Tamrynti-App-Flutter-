@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/grid_recipe.dart';
 
 import 'package:flutter_application_1/models/recipe.dart';
 import 'package:flutter_application_1/screens/create_recipes_screen.dart';
 import 'package:flutter_application_1/screens/my_fitness_plan.dart';
+import 'package:flutter_application_1/screens/my_recipes_plan.dart';
 import 'package:flutter_application_1/widgets/custom_buttom_navbar.dart';
 import 'package:flutter_application_1/widgets/recipe_card.dart';
 
@@ -55,7 +57,7 @@ class _MyNutritionPlanState extends State<MyNutritionPlan> {
 
       body: Stack(
         children: [
-          Positioned.fill(child:  _buildRecipesBody()),
+          Positioned.fill(child: _buildRecipesBody()),
 
           // HEADER
           Positioned(
@@ -74,7 +76,7 @@ class _MyNutritionPlanState extends State<MyNutritionPlan> {
             ),
           ),
 
-          // MY PLAN BUTTON
+          // My Plan Button
           Positioned(
             left: 90.w,
             top: 75.h,
@@ -84,7 +86,19 @@ class _MyNutritionPlanState extends State<MyNutritionPlan> {
                 width: 78.w,
                 height: 26.h,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    final List<GridRecipe>? selectedRecipes =
+                        await Navigator.push<List<GridRecipe>>(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MyRecipePlan(),
+                          ),
+                        );
+
+                    if (selectedRecipes != null) {
+                      mergeLibraryRecipes(selectedRecipes);
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFFF7F7),
                     elevation: 0,
@@ -109,7 +123,7 @@ class _MyNutritionPlanState extends State<MyNutritionPlan> {
             ),
           ),
 
-          // RECIPES BUTTON
+          // Recipes Button
           Positioned(
             left: 190.w,
             top: 75.h,
@@ -269,5 +283,26 @@ class _MyNutritionPlanState extends State<MyNutritionPlan> {
               },
             ),
     );
+  }
+
+  void mergeLibraryRecipes(List<GridRecipe> selectedRecipes) {
+    setState(() {
+      for (final gridRecipe in selectedRecipes) {
+        final bool alreadyExists = _recipes.any(
+          (recipe) => recipe.title == gridRecipe.title,
+        );
+
+        if (!alreadyExists) {
+          _recipes.add(
+            Recipe(
+              title: gridRecipe.title,
+              mealType: gridRecipe.mealType,
+              totalCalories: gridRecipe.totalCalories,
+              assetImage: 'assets/images/recipes/${gridRecipe.image}',
+            ),
+          );
+        }
+      }
+    });
   }
 }

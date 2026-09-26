@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/my_fitness_plan.dart';
 import 'package:flutter_application_1/screens/my_nutrition_plan.dart';
-import 'package:flutter_application_1/screens/my_plan_plan.dart';
+import 'package:flutter_application_1/screens/my_exercise_plan.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 //import 'screens/customscreen.dart';

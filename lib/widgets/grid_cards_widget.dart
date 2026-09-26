@@ -2,61 +2,82 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/screens/lib_exercise_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../models/grid_exercise.dart';
+class GridCardsWidget<T> extends StatefulWidget {
+  final String jsonPath;
+  final String imagePath;
 
-class GridCardsWidget extends StatefulWidget {
-  final Function(List<GridExercise>) onExercisesSelected;
+  final T Function(Map<String, dynamic> json) fromJson;
 
-  const GridCardsWidget({super.key, required this.onExercisesSelected});
+  final int Function(T item) getId;
+
+  final String Function(T item) getTitle;
+
+  final String Function(T item) getImage;
+
+  final Function(T item) onItemTap;
+
+  final Function(List<T>) onItemsSelected;
+
+  const GridCardsWidget({
+    super.key,
+    required this.jsonPath,
+    required this.imagePath,
+    required this.fromJson,
+    required this.getId,
+    required this.getTitle,
+    required this.getImage,
+    required this.onItemTap,
+    required this.onItemsSelected,
+  });
 
   @override
-  State<GridCardsWidget> createState() => _GridCardsWidgetState();
+  State<GridCardsWidget<T>> createState() => _GridCardsWidgetState<T>();
 }
 
-class _GridCardsWidgetState extends State<GridCardsWidget> {
-  List<GridExercise> exercises = [];
+class _GridCardsWidgetState<T> extends State<GridCardsWidget<T>> {
+  List<T> items = [];
 
-  // Exercises selected by the user
-  List<GridExercise> selectedExercises = [];
+  // Items selected by the user
+  List<T> selectedItems = [];
 
   @override
   void initState() {
     super.initState();
-    loadExercises();
+    loadItems();
   }
 
-  Future<void> loadExercises() async {
-    final String jsonString = await rootBundle.loadString(
-      'assets/data/exercises.json',
-    );
+  Future<void> loadItems() async {
+    final String jsonString = await rootBundle.loadString(widget.jsonPath);
 
     final List<dynamic> jsonData = jsonDecode(jsonString);
 
-    final List<GridExercise> loadedExercises = jsonData
-        .map((exercise) => GridExercise.fromJson(exercise))
+    final List<T> loadedItems = jsonData
+        .map((item) => widget.fromJson(item as Map<String, dynamic>))
         .toList();
 
+    if (!mounted) return;
+
     setState(() {
-      exercises = loadedExercises;
+      items = loadedItems;
     });
   }
 
-  void addExercise(GridExercise exercise) {
-    // Prevent duplicate exercises
-    final alreadyAdded = selectedExercises.any(
-      (selectedExercise) => selectedExercise.id == exercise.id,
+  void addItem(T item) {
+    final int itemId = widget.getId(item);
+
+    // Prevent duplicates
+    final bool alreadyAdded = selectedItems.any(
+      (selectedItem) => widget.getId(selectedItem) == itemId,
     );
 
     if (!alreadyAdded) {
       setState(() {
-        selectedExercises.add(exercise);
+        selectedItems.add(item);
       });
 
-      // Send the updated list to MyPlanPlane
-      widget.onExercisesSelected(List.from(selectedExercises));
+      widget.onItemsSelected(List.from(selectedItems));
     }
   }
 
@@ -70,7 +91,7 @@ class _GridCardsWidgetState extends State<GridCardsWidget> {
         bottom: 90.h,
       ),
       child: GridView.builder(
-        itemCount: exercises.length,
+        itemCount: items.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 14.w,
@@ -78,30 +99,26 @@ class _GridCardsWidgetState extends State<GridCardsWidget> {
           childAspectRatio: 0.82,
         ),
         itemBuilder: (context, index) {
-          final GridExercise exercise = exercises[index];
+          final T item = items[index];
 
-          final bool isAdded = selectedExercises.any(
-            (selectedExercise) => selectedExercise.id == exercise.id,
+          final int itemId = widget.getId(item);
+
+          final bool isAdded = selectedItems.any(
+            (selectedItem) => widget.getId(selectedItem) == itemId,
           );
 
           return ClipRRect(
             borderRadius: BorderRadius.circular(16.r),
             child: Stack(
               children: [
-                // Exercise Image
+                // Item Image
                 Positioned.fill(
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              LibExerciseScreen(exercise: exercise),
-                        ),
-                      );
+                      widget.onItemTap(item);
                     },
                     child: Image.asset(
-                      'assets/images/exercises/${exercise.image}',
+                      '${widget.imagePath}/${widget.getImage(item)}',
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
@@ -142,13 +159,13 @@ class _GridCardsWidgetState extends State<GridCardsWidget> {
                   ),
                 ),
 
-                // Exercise Name
+                // Item Title
                 Positioned(
                   bottom: 12.h,
                   left: 12.w,
                   right: 50.w,
                   child: Text(
-                    exercise.name,
+                    widget.getTitle(item),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -169,18 +186,18 @@ class _GridCardsWidgetState extends State<GridCardsWidget> {
                     child: InkWell(
                       customBorder: const CircleBorder(),
                       onTap: () {
-                        addExercise(exercise);
+                        addItem(item);
                       },
                       child: Container(
                         width: 32.w,
                         height: 32.h,
-                        decoration: BoxDecoration(
-                          color: isAdded ? Colors.white : Colors.white,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
                           isAdded ? Icons.check : Icons.add,
-                          color: isAdded ? Colors.black : Colors.black,
+                          color: Colors.black,
                           size: 20,
                         ),
                       ),

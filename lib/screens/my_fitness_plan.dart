@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/create_exercisesscreen.dart';
 import 'package:flutter_application_1/screens/my_nutrition_plan.dart';
-import 'package:flutter_application_1/screens/my_plan_plan.dart';
+import 'package:flutter_application_1/screens/my_exercise_plan.dart';
 import 'package:flutter_application_1/widgets/custom_buttom_navbar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -130,7 +130,7 @@ final int _currentIndex = 2;
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            const MyPlanPlane(),
+                            const MyExcersisePlan(),
                       ),
                     );
 

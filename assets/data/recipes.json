@@ -1,0 +1,352 @@
+[
+  {
+    "id": 1,
+    "title": "Grilled Chicken with Rice",
+    "image": "Grilled Chicken with Rice.png",
+    "mealType": "Lunch",
+    "totalCalories": 520
+  },
+  {
+    "id": 2,
+    "title": "Chicken Shawarma Bowl",
+    "image": "Chicken Shawarma Bowl.png",
+    "mealType": "Lunch",
+    "totalCalories": 560
+  },
+  {
+    "id": 3,
+    "title": "Grilled Chicken Salad",
+    "image": "Grilled Chicken Salad.png",
+    "mealType": "Lunch",
+    "totalCalories": 380
+  },
+  {
+    "id": 4,
+    "title": "Greek Salad",
+    "image": "Greek Salad.png",
+    "mealType": "Lunch",
+    "totalCalories": 330
+  },
+  {
+    "id": 5,
+    "title": "Tuna Salad",
+    "image": "Tuna Salad.png",
+    "mealType": "Lunch",
+    "totalCalories": 360
+  },
+  {
+    "id": 6,
+    "title": "Tuna Sandwich",
+    "image": "Tuna Sandwich.png",
+    "mealType": "Lunch",
+    "totalCalories": 410
+  },
+  {
+    "id": 7,
+    "title": "Chicken Sandwich",
+    "image": "Chicken Sandwich.png",
+    "mealType": "Lunch",
+    "totalCalories": 430
+  },
+  {
+    "id": 8,
+    "title": "Grilled Chicken Wrap",
+    "image": "Grilled Chicken Wrap.png",
+    "mealType": "Lunch",
+    "totalCalories": 450
+  },
+  {
+    "id": 9,
+    "title": "Chicken Pasta",
+    "image": "Chicken Pasta.png",
+    "mealType": "Lunch",
+    "totalCalories": 590
+  },
+  {
+    "id": 10,
+    "title": "Tomato Pasta",
+    "image": "Tomato Pasta.png",
+    "mealType": "Lunch",
+    "totalCalories": 470
+  },
+  {
+    "id": 11,
+    "title": "Pasta Primavera",
+    "image": "Pasta Primavera.png",
+    "mealType": "Lunch",
+    "totalCalories": 490
+  },
+  {
+    "id": 12,
+    "title": "Beef Stir Fry",
+    "image": "Beef Stir Fry.png",
+    "mealType": "Dinner",
+    "totalCalories": 540
+  },
+  {
+    "id": 13,
+    "title": "Chicken Stir Fry",
+    "image": "Chicken Stir Fry.png",
+    "mealType": "Dinner",
+    "totalCalories": 500
+  },
+  {
+    "id": 14,
+    "title": "Grilled Salmon with Vegetables",
+    "image": "Grilled Salmon with Vegetables.png",
+    "mealType": "Dinner",
+    "totalCalories": 520
+  },
+  {
+    "id": 15,
+    "title": "Baked Salmon with Rice",
+    "image": "Baked Salmon with Rice.png",
+    "mealType": "Dinner",
+    "totalCalories": 610
+  },
+  {
+    "id": 16,
+    "title": "Grilled Fish with Rice",
+    "image": "Grilled Fish with Rice.png",
+    "mealType": "Lunch",
+    "totalCalories": 510
+  },
+  {
+    "id": 17,
+    "title": "Fish and Potatoes",
+    "image": "Fish and Potatoes.png",
+    "mealType": "Dinner",
+    "totalCalories": 480
+  },
+  {
+    "id": 18,
+    "title": "Beef and Rice",
+    "image": "Beef and Rice.png",
+    "mealType": "Lunch",
+    "totalCalories": 570
+  },
+  {
+    "id": 19,
+    "title": "Beef Kofta with Rice",
+    "image": "Beef Kofta with Rice.png",
+    "mealType": "Lunch",
+    "totalCalories": 600
+  },
+  {
+    "id": 20,
+    "title": "Chicken Kofta",
+    "image": "Chicken Kofta.png",
+    "mealType": "Dinner",
+    "totalCalories": 450
+  },
+  {
+    "id": 21,
+    "title": "Egyptian Koshari",
+    "image": "Egyptian Koshari.png",
+    "mealType": "Lunch",
+    "totalCalories": 620
+  },
+  {
+    "id": 22,
+    "title": "Ful Medames",
+    "image": "Ful Medames.png",
+    "mealType": "Breakfast",
+    "totalCalories": 360
+  },
+  {
+    "id": 23,
+    "title": "Ful with Eggs",
+    "image": "Ful with Eggs.png",
+    "mealType": "Breakfast",
+    "totalCalories": 440
+  },
+  {
+    "id": 24,
+    "title": "Egyptian Fava Bean Salad",
+    "image": "Egyptian Fava Bean Salad.png",
+    "mealType": "Breakfast",
+    "totalCalories": 320
+  },
+  {
+    "id": 25,
+    "title": "Grilled Chicken with Potatoes",
+    "image": "Grilled Chicken with Potatoes.png",
+    "mealType": "Dinner",
+    "totalCalories": 540
+  },
+  {
+    "id": 26,
+    "title": "Baked Chicken with Potatoes",
+    "image": "Baked Chicken with Potatoes.png",
+    "mealType": "Dinner",
+    "totalCalories": 560
+  },
+  {
+    "id": 27,
+    "title": "Chicken Fajitas",
+    "image": "Chicken Fajitas.png",
+    "mealType": "Dinner",
+    "totalCalories": 520
+  },
+  {
+    "id": 28,
+    "title": "Beef Fajitas",
+    "image": "Beef Fajitas.png",
+    "mealType": "Dinner",
+    "totalCalories": 560
+  },
+  {
+    "id": 29,
+    "title": "Chicken Tacos",
+    "image": "Chicken Tacos.png",
+    "mealType": "Dinner",
+    "totalCalories": 480
+  },
+  {
+    "id": 30,
+    "title": "Bean and Rice Bowl",
+    "image": "Bean and Rice Bowl.png",
+    "mealType": "Lunch",
+    "totalCalories": 500
+  },
+  {
+    "id": 31,
+    "title": "Chicken Burrito Bowl",
+    "image": "Chicken Burrito Bowl.png",
+    "mealType": "Lunch",
+    "totalCalories": 580
+  },
+  {
+    "id": 32,
+    "title": "Hummus with Pita",
+    "image": "Hummus with Pita.png",
+    "mealType": "Breakfast",
+    "totalCalories": 390
+  },
+  {
+    "id": 33,
+    "title": "Hummus Chicken Bowl",
+    "image": "Hummus Chicken Bowl.png",
+    "mealType": "Lunch",
+    "totalCalories": 520
+  },
+  {
+    "id": 34,
+    "title": "Falafel with Salad",
+    "image": "Falafel with Salad.png",
+    "mealType": "Breakfast",
+    "totalCalories": 430
+  },
+  {
+    "id": 35,
+    "title": "Falafel Wrap",
+    "image": "Falafel Wrap.png",
+    "mealType": "Lunch",
+    "totalCalories": 470
+  },
+  {
+    "id": 36,
+    "title": "Shakshuka",
+    "image": "Shakshuka.png",
+    "mealType": "Breakfast",
+    "totalCalories": 350
+  },
+  {
+    "id": 37,
+    "title": "Omelette with Vegetables",
+    "image": "Omelette with Vegetables.png",
+    "mealType": "Breakfast",
+    "totalCalories": 320
+  },
+  {
+    "id": 38,
+    "title": "Egg and Avocado Toast",
+    "image": "Egg and Avocado Toast.png",
+    "mealType": "Breakfast",
+    "totalCalories": 380
+  },
+  {
+    "id": 39,
+    "title": "Greek Yogurt with Fruit",
+    "image": "Greek Yogurt with Fruit.png",
+    "mealType": "Breakfast",
+    "totalCalories": 280
+  },
+  {
+    "id": 40,
+    "title": "Overnight Oats",
+    "image": "Overnight Oats.png",
+    "mealType": "Breakfast",
+    "totalCalories": 350
+  },
+  {
+    "id": 41,
+    "title": "Oatmeal with Banana",
+    "image": "Oatmeal with Banana.png",
+    "mealType": "Breakfast",
+    "totalCalories": 330
+  },
+  {
+    "id": 42,
+    "title": "Peanut Butter Banana Toast",
+    "image": "Peanut Butter Banana Toast.png",
+    "mealType": "Breakfast",
+    "totalCalories": 390
+  },
+  {
+    "id": 43,
+    "title": "Chicken Soup",
+    "image": "Chicken Soup.png",
+    "mealType": "Dinner",
+    "totalCalories": 280
+  },
+  {
+    "id": 44,
+    "title": "Lentil Soup",
+    "image": "Lentil Soup.png",
+    "mealType": "Dinner",
+    "totalCalories": 320
+  },
+  {
+    "id": 45,
+    "title": "Vegetable Soup",
+    "image": "Vegetable Soup.png",
+    "mealType": "Dinner",
+    "totalCalories": 220
+  },
+  {
+    "id": 46,
+    "title": "Chicken Caesar Salad",
+    "image": "Chicken Caesar Salad.png",
+    "mealType": "Lunch",
+    "totalCalories": 450
+  },
+  {
+    "id": 47,
+    "title": "Caprese Salad",
+    "image": "Caprese Salad.png",
+    "mealType": "Lunch",
+    "totalCalories": 300
+  },
+  {
+    "id": 48,
+    "title": "Mediterranean Chickpea Salad",
+    "image": "Mediterranean Chickpea Salad.png",
+    "mealType": "Lunch",
+    "totalCalories": 390
+  },
+  {
+    "id": 49,
+    "title": "Chicken Couscous",
+    "image": "Chicken Couscous.png",
+    "mealType": "Lunch",
+    "totalCalories": 530
+  },
+  {
+    "id": 50,
+    "title": "Turkey and Cheese Sandwich",
+    "image": "Turkey and Cheese Sandwich.png",
+    "mealType": "Lunch",
+    "totalCalories": 420
+  }
+]
